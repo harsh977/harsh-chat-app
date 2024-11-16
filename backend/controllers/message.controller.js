@@ -8,8 +8,8 @@ export const sendMessage = async(req,res) =>{
         const {id:receiver_id} =req.params;
         const sender_id=req.user._id;
 
-       
-        const convo= await Conversation.findOne({
+
+        let convo= await Conversation.findOne({
             participants : {$all : [sender_id,receiver_id
             ]}
         })
@@ -38,7 +38,7 @@ export const sendMessage = async(req,res) =>{
         res.status(200).json({message:newMessage})
         
     }catch(error){
-        res.status(500).json({error:"Internal server error"});
+        res.status(500).json({error:"Internal server error, no convo exists"});
     }
 }
 
