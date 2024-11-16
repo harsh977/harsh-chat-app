@@ -28,7 +28,7 @@ export const sendMessage = async(req,res) =>{
 
         newMessage.save();    
         convo.save();
-        res.status(200).json({message:"message sent"})
+        res.status(200).json({message:newMessage})
         
     }catch(error){
         res.status(500).json({error:"Internal server error"});
@@ -44,7 +44,7 @@ export const getMessage = async (req, res) => {
         const messages1 = await Conversation.findOne({
             participants: { $all: [sender_id, receiver_id] }
         }).populate("messages");
-        if(!conversation) return res.status(200).json([]);
+        if(!messages1) return res.status(200).json([]);
         // Send the response and ensure the function exits
         return res.status(200).json(messages1.messages);
     } catch (error) {
